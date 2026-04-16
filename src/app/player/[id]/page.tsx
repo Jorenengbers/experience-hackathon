@@ -2,6 +2,7 @@
 
 import { use, useEffect, useRef, useState, ViewTransition } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import PhoneShell from '@/components/PhoneShell'
 import Waveform from '@/components/Waveform'
 import { useEpisodes } from '@/lib/EpisodeContext'
@@ -163,7 +164,7 @@ export default function PlayerPage({ params }: { params: Promise<{ id: string }>
                 <span>Back</span>
               </Link>
 
-              <img
+              <Image
                 src="/logo.svg"
                 alt="Briefcast"
                 width={25}
@@ -183,8 +184,7 @@ export default function PlayerPage({ params }: { params: Promise<{ id: string }>
               >
                 {albumCover ? (
                   <>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={albumCover} alt="Album cover" className="w-full h-full object-cover" />
+                    <Image src={albumCover} alt="Album cover" width={358} height={358} className="w-full h-full object-cover" />
                     {isPlaying && (
                       <div className="absolute bottom-4 left-0 right-0 flex justify-center">
                         <Waveform isPlaying={isPlaying} accent={accent} />
