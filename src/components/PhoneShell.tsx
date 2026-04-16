@@ -1,6 +1,37 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+
 export default function PhoneShell({ children }: { children: React.ReactNode }) {
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false
+  )
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
+
+  // On real mobile: fill the entire screen, respect safe areas
+  if (isMobile) {
+    return (
+      <div
+        className="flex flex-col overflow-hidden"
+        style={{
+          width: '100dvw',
+          height: '100dvh',
+          background: '#0e0e0f',
+          paddingTop: 'env(safe-area-inset-top)',
+          paddingBottom: 'env(safe-area-inset-bottom)',
+        }}
+      >
+        {children}
+      </div>
+    )
+  }
+
+  // On desktop: centered iPhone shell
   return (
     <div className="min-h-screen bg-[#070708] flex items-center justify-center p-8">
       {/* Phone frame */}
@@ -18,14 +49,7 @@ export default function PhoneShell({ children }: { children: React.ReactNode }) 
       >
         {/* Dynamic Island */}
         <div className="absolute top-[14px] left-1/2 -translate-x-1/2 z-50">
-          <div
-            style={{
-              width: 120,
-              height: 34,
-              borderRadius: 20,
-              background: '#000',
-            }}
-          />
+          <div style={{ width: 120, height: 34, borderRadius: 20, background: '#000' }} />
         </div>
 
         {/* Status bar */}
@@ -52,42 +76,16 @@ export default function PhoneShell({ children }: { children: React.ReactNode }) 
             </svg>
             {/* Battery */}
             <div className="flex items-center gap-[1px]">
-              <div
-                style={{
-                  width: 25,
-                  height: 12,
-                  borderRadius: 3,
-                  border: '1px solid rgba(255,255,255,0.5)',
-                  padding: '2px',
-                  position: 'relative',
-                }}
-              >
-                <div
-                  style={{
-                    width: '80%',
-                    height: '100%',
-                    borderRadius: 1.5,
-                    background: 'white',
-                  }}
-                />
+              <div style={{ width: 25, height: 12, borderRadius: 3, border: '1px solid rgba(255,255,255,0.5)', padding: '2px' }}>
+                <div style={{ width: '80%', height: '100%', borderRadius: 1.5, background: 'white' }} />
               </div>
-              <div
-                style={{
-                  width: 2,
-                  height: 5,
-                  borderRadius: '0 1px 1px 0',
-                  background: 'rgba(255,255,255,0.4)',
-                }}
-              />
+              <div style={{ width: 2, height: 5, borderRadius: '0 1px 1px 0', background: 'rgba(255,255,255,0.4)' }} />
             </div>
           </div>
         </div>
 
-        {/* Content area — scrollable */}
-        <div
-          className="flex-1 overflow-hidden"
-          style={{ paddingTop: 54, borderRadius: 52 }}
-        >
+        {/* Content area */}
+        <div className="flex-1 overflow-hidden" style={{ paddingTop: 54, borderRadius: 52 }}>
           {children}
         </div>
       </div>
