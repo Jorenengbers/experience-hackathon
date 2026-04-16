@@ -4,7 +4,7 @@ export const EPISODES: Episode[] = [
   {
     id: 'ep-001-am',
     edition: 'morning',
-    title: 'The day ahead',
+    title: 'From Transition to Momentum',
     date: 'Wednesday, April 16 · 2026',
     dateShort: 'Today',
     duration: '5:10',
@@ -17,7 +17,7 @@ export const EPISODES: Episode[] = [
   {
     id: 'ep-001-pm',
     edition: 'evening',
-    title: 'The day in review',
+    title: '',
     date: 'Wednesday, April 16 · 2026',
     dateShort: 'Today',
     duration: '5:30',

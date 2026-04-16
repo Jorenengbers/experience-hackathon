@@ -1,7 +1,7 @@
 import type { ScriptLine } from '@/lib/types'
 
 export const MORNING_SCRIPT: ScriptLine[] = [
-  { speaker: 'ALEX', text: "Good morning Rianne. It's Wednesday April 16th — this is your Briefcast morning edition. I'm Alex, joined as always by Sara. Let's get into it." },
+  { speaker: 'ALEX', text: "Good morning Rianne. It's Wednesday April 16th — this is your HyperRadio morning edition. I'm Alex, joined as always by Sara. Let's get into it." },
   { speaker: 'SARA', text: "Before we dive in — Amsterdam is looking at 11 degrees and overcast this morning. Rain is expected around noon, so if you're cycling back tonight, maybe reconsider." },
   { speaker: 'ALEX', text: "Polestar posted their Q1 numbers this week and they weren't pretty. Deliveries down 24% year on year, well below what analysts had pencilled in." },
   { speaker: 'SARA', text: "What does that mean for their European positioning?" },
