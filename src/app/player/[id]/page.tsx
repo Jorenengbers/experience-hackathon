@@ -31,7 +31,7 @@ export default function PlayerPage({ params }: { params: Promise<{ id: string }>
   const [audioAvailable, setAudioAvailable] = useState(false)
 
   const isMorning = episode?.edition === 'morning'
-  const accent = '#ea9ffd'
+  const accent = isMorning ? '#0a84ff' : '#5e5ce6'
   const albumCover = isMorning ? '/album_cover.png' : null
 
   useEffect(() => {
@@ -97,8 +97,8 @@ export default function PlayerPage({ params }: { params: Promise<{ id: string }>
   if (!episode) {
     return (
       <PhoneShell>
-        <div className="h-full flex items-center justify-center" style={{ background: '#0d1015' }}>
-          <p style={{ color: '#9b9890' }}>Episode not found</p>
+        <div className="h-full flex items-center justify-center" style={{ background: '#f2f2f7' }}>
+          <p style={{ color: 'rgba(60,60,67,0.72)' }}>Episode not found</p>
         </div>
       </PhoneShell>
     )
@@ -112,56 +112,56 @@ export default function PlayerPage({ params }: { params: Promise<{ id: string }>
         enter={{ 'nav-forward': 'nav-forward', default: 'none' }}
         exit={{ 'nav-back': 'nav-back', default: 'none' }}
       >
-      <div className="h-full flex flex-col overflow-hidden relative" style={{ background: '#0d1015' }}>
+      <div className="h-full flex flex-col overflow-hidden relative" style={{ background: '#101114' }}>
 
         {/* Blurred background from album art */}
-        {albumCover && (
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{ zIndex: 0 }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={albumCover}
-              alt=""
-              className="absolute"
+        <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 0 }}>
+          {albumCover ? (
+            <div
+              className="absolute inset-[-32%]"
               style={{
-                width: '280%',
-                height: '280%',
-                top: '-90%',
-                left: '-90%',
-                objectFit: 'cover',
-                filter: 'blur(25px)',
-                opacity: 0.2,
+                backgroundImage: `url(${albumCover})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                filter: 'blur(56px) saturate(1.05)',
+                transform: 'scale(1.15)',
+                opacity: 0.68,
               }}
             />
-          </div>
-        )}
+          ) : (
+            <div
+              className="absolute inset-0"
+              style={{ background: 'radial-gradient(circle at top, rgba(94,92,230,0.42) 0%, rgba(16,17,20,0) 48%)' }}
+            />
+          )}
+          <div
+            className="absolute inset-0"
+            style={{ background: 'linear-gradient(180deg, rgba(16,17,20,0.18) 0%, rgba(16,17,20,0.4) 28%, rgba(16,17,20,0.92) 100%)' }}
+          />
+        </div>
 
         {/* Scrollable content */}
         <div className="flex-1 overflow-y-auto relative" style={{ zIndex: 1 }}>
-          <div className="px-4 pb-8">
+          <div className="px-5 pb-8">
 
             {/* Header */}
-            <div className="flex items-center justify-between pt-4 pb-6">
+            <div className="flex items-center justify-between pt-4 pb-7">
               <Link
                 href="/"
                 transitionTypes={['nav-back']}
-                className="flex items-center gap-2 cursor-pointer h-10 px-4 rounded-full"
+                className="flex items-center justify-center h-10 w-10 rounded-full"
                 style={{
-                  background: 'rgba(49,49,49,0.85)',
-                  backdropFilter: 'blur(20px)',
-                  WebkitBackdropFilter: 'blur(20px)',
+                  background: 'rgba(255,255,255,0.16)',
+                  backdropFilter: 'blur(22px)',
+                  WebkitBackdropFilter: 'blur(22px)',
                   color: 'white',
                   textDecoration: 'none',
-                  fontSize: 16,
-                  fontWeight: 500,
+                  boxShadow: 'inset 0 0 0 0.5px rgba(255,255,255,0.18)',
                 }}
               >
-                <svg width="7" height="12" viewBox="0 0 7 12" fill="none">
-                  <path d="M6 1L1 6l5 5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <svg width="10" height="16" viewBox="0 0 10 16" fill="none">
+                  <path d="M7.8 2.2L2.5 8l5.3 5.8" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                <span>Back</span>
               </Link>
 
               <Image
@@ -173,13 +173,13 @@ export default function PlayerPage({ params }: { params: Promise<{ id: string }>
               />
 
               {/* Spacer to balance */}
-              <div style={{ width: 84 }} />
+              <div style={{ width: 40 }} />
             </div>
 
             {/* Album artwork */}
             <ViewTransition name={`episode-card-${episode.id}`} share="card-morph">
               <div
-                className="w-full rounded-[16px] overflow-hidden mb-6 relative"
+                className="w-full rounded-[24px] overflow-hidden mb-8 relative"
                 style={{ aspectRatio: '1' }}
               >
                 {albumCover ? (
@@ -194,12 +194,12 @@ export default function PlayerPage({ params }: { params: Promise<{ id: string }>
                 ) : (
                   <div
                     className="w-full h-full flex flex-col items-center justify-center"
-                    style={{ background: '#1a1a2e' }}
+                    style={{ background: 'linear-gradient(180deg, #7d7bf7 0%, #5e5ce6 100%)' }}
                   >
-                    <div className="text-[22px] mb-2" style={{ fontFamily: 'var(--font-playfair)', color: accent }}>
+                    <div className="text-[24px] mb-2 font-semibold tracking-[-0.02em] text-white">
                       HyperRadio
                     </div>
-                    <div className="text-[13px] mb-6" style={{ color: '#9b9890' }}>
+                    <div className="text-[13px] mb-6 text-white/75">
                       {episode.edition === 'morning' ? 'Morning Edition' : 'Evening Edition'}
                     </div>
                     <Waveform isPlaying={isPlaying} accent={accent} />
@@ -209,55 +209,56 @@ export default function PlayerPage({ params }: { params: Promise<{ id: string }>
             </ViewTransition>
 
             {/* Episode info */}
-            <div className="text-center mb-6">
-              <p className="text-[16px] font-semibold mb-2" style={{ color: accent }}>
+            <div className="text-center mb-7">
+              <p className="text-[15px] font-medium mb-2" style={{ color: 'rgba(255,255,255,0.72)' }}>
                 HyperRadio {episode.edition === 'morning' ? 'Morning' : 'Evening'} Edition
               </p>
               <h2
-                className="text-[24px] font-semibold mb-2 leading-tight"
+                className="text-[30px] font-semibold mb-2 leading-tight tracking-[-0.03em]"
                 style={{ color: 'white' }}
               >
-                {episode.title || <span style={{ color: '#5a5856', fontStyle: 'italic' }}>Title coming soon</span>}
+                {episode.title || <span style={{ color: 'rgba(255,255,255,0.45)', fontStyle: 'italic' }}>Title coming soon</span>}
               </h2>
-              <p className="text-[14px]" style={{ color: '#bababa' }}>
+              <p className="text-[15px]" style={{ color: 'rgba(255,255,255,0.62)' }}>
                 {episode.date.replace(' ·', '')}
               </p>
             </div>
 
             {/* Progress bar */}
-            <div className="mb-6">
+            <div className="mb-4">
               <div
                 className="w-full rounded-full cursor-pointer"
-                style={{ height: 8, background: '#313131' }}
+                style={{ height: 6, background: 'rgba(255,255,255,0.18)' }}
                 onClick={handleProgressClick}
               >
                 <div
                   className="h-full rounded-full"
                   style={{
                     width: `${progress * 100}%`,
-                    background: accent,
+                    background: '#ffffff',
                     transition: 'width 0.1s linear',
                   }}
                 />
               </div>
               <div className="flex justify-between mt-2">
-                <span className="text-[12px]" style={{ color: '#bababa' }}>{formatTime(currentTime)}</span>
-                <span className="text-[12px]" style={{ color: '#bababa' }}>{formatTime(duration)}</span>
+                <span className="text-[13px] tabular-nums" style={{ color: 'rgba(255,255,255,0.68)' }}>{formatTime(currentTime)}</span>
+                <span className="text-[13px] tabular-nums" style={{ color: 'rgba(255,255,255,0.68)' }}>{formatTime(duration)}</span>
               </div>
             </div>
 
             {/* Playback controls */}
-            <div className="flex items-center justify-between mb-6 px-6">
+            <div className="flex items-center justify-between mb-7 px-4">
               {/* Skip back 10s */}
               <button
                 onClick={() => skip(-10)}
                 disabled={!audioAvailable}
-                style={{ background: 'none', border: 'none', opacity: audioAvailable ? 1 : 0.35, cursor: 'pointer' }}
+                className="h-12 w-12 flex items-center justify-center rounded-full"
+                style={{ background: 'transparent', border: 'none', opacity: audioAvailable ? 1 : 0.35 }}
               >
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                  <path d="M20 8C13.4 8 8 13.4 8 20s5.4 12 12 12 12-5.4 12-12" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                  <path d="M20 8l-4-4m4 4l-4 4" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  <text x="20" y="23" textAnchor="middle" fontSize="9" fill="white" fontWeight="600">10</text>
+                <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+                  <path d="M22 9C14.82 9 9 14.82 9 22s5.82 13 13 13 13-5.82 13-13" stroke="white" strokeWidth="1.9" strokeLinecap="round" />
+                  <path d="M22 9l-4.2-4.1m4.2 4.1l-4.2 4.1" stroke="white" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
+                  <text x="22" y="25.2" textAnchor="middle" fontSize="10" fill="white" fontWeight="700">10</text>
                 </svg>
               </button>
 
@@ -266,17 +267,17 @@ export default function PlayerPage({ params }: { params: Promise<{ id: string }>
                 onClick={togglePlay}
                 disabled={!audioAvailable}
                 style={{
-                  width: 100,
-                  height: 100,
+                  width: 88,
+                  height: 88,
                   borderRadius: '50%',
-                  background: audioAvailable ? accent : '#313131',
+                  background: audioAvailable ? '#ffffff' : 'rgba(255,255,255,0.24)',
                   border: 'none',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  cursor: 'pointer',
                   transition: 'transform 0.15s ease',
                   flexShrink: 0,
+                  boxShadow: audioAvailable ? '0 18px 36px rgba(0,0,0,0.24)' : 'none',
                 }}
                 onMouseDown={(e) => { e.currentTarget.style.transform = 'scale(0.92)' }}
                 onMouseUp={(e) => { e.currentTarget.style.transform = 'scale(1)' }}
@@ -285,13 +286,13 @@ export default function PlayerPage({ params }: { params: Promise<{ id: string }>
                 {isPlaying ? (
                   /* Pause — two rounded bars */
                   <div className="flex items-center gap-[10px]">
-                    <div style={{ width: 8, height: 39, borderRadius: 300, background: '#0d1015' }} />
-                    <div style={{ width: 8, height: 39, borderRadius: 300, background: '#0d1015' }} />
+                    <div style={{ width: 8, height: 32, borderRadius: 300, background: '#101114' }} />
+                    <div style={{ width: 8, height: 32, borderRadius: 300, background: '#101114' }} />
                   </div>
                 ) : (
                   /* Play triangle */
-                  <svg width="30" height="34" viewBox="0 0 30 34" fill="none" style={{ marginLeft: 4 }}>
-                    <path d="M2 2l26 15L2 32V2z" fill="#0d1015" />
+                  <svg width="26" height="30" viewBox="0 0 26 30" fill="none" style={{ marginLeft: 4 }}>
+                    <path d="M2 2l22 13L2 28V2z" fill="#101114" />
                   </svg>
                 )}
               </button>
@@ -300,12 +301,13 @@ export default function PlayerPage({ params }: { params: Promise<{ id: string }>
               <button
                 onClick={() => skip(10)}
                 disabled={!audioAvailable}
-                style={{ background: 'none', border: 'none', opacity: audioAvailable ? 1 : 0.35, cursor: 'pointer' }}
+                className="h-12 w-12 flex items-center justify-center rounded-full"
+                style={{ background: 'transparent', border: 'none', opacity: audioAvailable ? 1 : 0.35 }}
               >
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                  <path d="M20 8c6.6 0 12 5.4 12 12s-5.4 12-12 12S8 26.6 8 20" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                  <path d="M20 8l4-4m-4 4l4 4" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  <text x="20" y="23" textAnchor="middle" fontSize="9" fill="white" fontWeight="600">10</text>
+                <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+                  <path d="M22 9c7.18 0 13 5.82 13 13s-5.82 13-13 13S9 29.18 9 22" stroke="white" strokeWidth="1.9" strokeLinecap="round" />
+                  <path d="M22 9l4.2-4.1M22 9l4.2 4.1" stroke="white" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" />
+                  <text x="22" y="25.2" textAnchor="middle" fontSize="10" fill="white" fontWeight="700">10</text>
                 </svg>
               </button>
             </div>
@@ -314,14 +316,30 @@ export default function PlayerPage({ params }: { params: Promise<{ id: string }>
             {/* No audio message */}
             {!audioAvailable && episode.audioFile && (
               <div
-                className="text-center text-[11px] px-4 py-3 rounded-[12px]"
-                style={{ background: 'rgba(49,49,49,0.6)', color: '#9b9890' }}
+                className="text-center text-[12px] px-4 py-3 rounded-[18px]"
+                style={{
+                  background: 'rgba(255,255,255,0.14)',
+                  color: 'rgba(255,255,255,0.78)',
+                  backdropFilter: 'blur(24px)',
+                  WebkitBackdropFilter: 'blur(24px)',
+                }}
               >
                 Add audio file to{' '}
-                <span style={{ color: accent, fontFamily: 'monospace' }}>public/audio/morning-episode.mp3</span>{' '}
+                <span style={{ color: '#ffffff', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace' }}>public/audio/morning-episode.mp3</span>{' '}
                 to enable playback
               </div>
             )}
+
+            <div className="mt-8 flex justify-center">
+              <div
+                style={{
+                  width: 140,
+                  height: 5,
+                  borderRadius: 999,
+                  background: 'rgba(255,255,255,0.82)',
+                }}
+              />
+            </div>
 
           </div>
         </div>

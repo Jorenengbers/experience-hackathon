@@ -1,39 +1,41 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #0e0e0f;
-  --surface: #161618;
-  --surface2: #1e1e21;
-  --border: rgba(255,255,255,0.08);
-  --border2: rgba(255,255,255,0.15);
-  --text: #f0ede8;
-  --text2: #9b9890;
-  --text3: #5a5856;
-  --amber: #e8a94a;
-  --blue: #7eb8f7;
-  --green: #6fcf97;
-  --purple: #c084db;
+  --bg: #f2f2f7;
+  --surface: rgba(255, 255, 255, 0.72);
+  --surface-strong: rgba(255, 255, 255, 0.92);
+  --surface-dark: rgba(28, 28, 30, 0.82);
+  --grouped: #ffffff;
+  --grouped-secondary: #f7f7fa;
+  --border: rgba(60, 60, 67, 0.16);
+  --border-strong: rgba(60, 60, 67, 0.28);
+  --text: #111111;
+  --text2: rgba(60, 60, 67, 0.78);
+  --text3: rgba(60, 60, 67, 0.5);
+  --blue: #0a84ff;
+  --blue-soft: rgba(10, 132, 255, 0.14);
+  --green: #30d158;
+  --orange: #ff9f0a;
+  --indigo: #5e5ce6;
+  --system-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", sans-serif;
+  --rounded-font: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Text", "Helvetica Neue", sans-serif;
 }
 
 @theme inline {
   --color-bg: var(--bg);
   --color-surface: var(--surface);
-  --color-surface2: var(--surface2);
+  --color-surface2: var(--surface-strong);
   --color-text: var(--text);
   --color-text2: var(--text2);
   --color-text3: var(--text3);
-  --color-amber: var(--amber);
   --color-blue-accent: var(--blue);
   --color-green: var(--green);
-  --color-purple: var(--purple);
-  --font-serif: var(--font-playfair);
-  --font-sans: var(--font-dm-sans);
+  --font-sans: var(--system-font);
 }
 
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  user-select: none;
   box-sizing: border-box;
 }
 
@@ -44,7 +46,18 @@ button, [role="button"], a {
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-family: var(--system-font);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+img {
+  -webkit-user-drag: none;
 }
 
 @keyframes slideUp {
@@ -93,14 +106,14 @@ body {
 
 /* Shared element morph: card → player artwork */
 ::view-transition-group(.card-morph) {
-  animation-duration: 420ms;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-duration: 380ms;
+  animation-timing-function: cubic-bezier(0.2, 0.9, 0.2, 1);
 }
 ::view-transition-image-pair(.card-morph) {
   animation-name: vt-morph-blur;
 }
 @keyframes vt-morph-blur {
-  25% { filter: blur(4px); }
+  25% { filter: blur(3px); }
 }
 
 /* Respect reduced motion */
